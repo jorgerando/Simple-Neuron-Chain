@@ -3,7 +3,7 @@ let img; // Declarar variable 'img'.
 
 function setup() {
   createCanvas(720, 400);
-  img = loadImage('~/Escritorio/programas/SimpleNeuronChain/mnist_png/train/0'); // Cargar la imagen
+  img = loadImage('mnist_png/train/0/1.png'); // Cargar la imagen
 }
 
 function draw() {
