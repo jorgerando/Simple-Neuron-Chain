@@ -3,15 +3,17 @@ var weightVisualizers = []
 let inIm ;
 var trainImg = []
 var neu ;
-
+var  a = 0;
 function setup() {
 
   createCanvas(1000, 870);
-
-  for(i = 0 ; i < 1000 ; i++) {
-
-    var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain/mnist_png/train/8/'+String(4)+'.png');
-    trainImg.push(img)
+  for( a = 0 ;  a < 10 ; a++ ){
+    for(i = 0 ; i < 1000 ; i++) {
+      var imgA = []
+      var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain/mnist_png/train/'+String(a)+'/'+String(i)+'_.png');
+      imgA.push(img)
+   }
+     trainImg.push(imgA)
   }
 
   // weight visualizers
@@ -41,11 +43,11 @@ function draw() {
   for(var i = 0 ; i < 10 ; i++){
     weightVisualizers[i].ver(trainImg[i])
   }
-  inIm.ver(trainImg[0])
+  inIm.ver(trainImg[a])
 
-  pred = neu.predic(trainImg[0])
-  neu.updateWeight(trainImg[0],pred,1)
+  pred = neu.predic(trainImg[a])
+  neu.updateWeight(trainImg[a],pred,1)
   console.log( "Prediccion : "+ pred )
-
+  a++
 
 }
