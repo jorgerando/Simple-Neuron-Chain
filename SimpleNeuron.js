@@ -8,9 +8,17 @@ class Neuron {
         this.nW = nW
         // weight random inicialice
         for(var i = 0 ; i < nW ; i++ ){
-          this.weight[i] = Math.random()
+          this.weight[i] = 0
         }
-        this.alfa = 0.01
+        this.alfa = 1
+   }
+
+   sig(x){
+     return 1/(1+Math.exp(-x))
+   }
+
+   sigD(x){
+    return this.sig(x)*(1-this.sig(x))
    }
 
    predic(img){
@@ -21,30 +29,37 @@ class Neuron {
        for(var y = 0 ; y < this.pixels ; y++ ){
 
            var color = img.get(x,y)
-           var input = color[0]/255
-           pred += this.weight[i] * input
+           var input = red(color)
+           var w  = this.weight[i]
+           pred += w * input
            i++
        }
      }
-     return pred
+     return this.sig(pred)
    }
 
-   updateWeight(img,predic,true_){
+   updateWeight(img,pred,true_){
 
      var i = 0 ;
-     var error = (pred - true_)*(pred -true_)
-     console.log("Error : "+error)
+
+     var error = pow((true_-pred),2)
+     //console.log("Error : "+error)
+
      for(var x = 0 ; x < this.pixels ; x++ ){
        for(var y = 0 ; y < this.pixels ; y++ ){
            var color = img.get(x,y)
-           var input = color[0]/255
-           this.weight[i]-= 2 * pred * input * this.alfa
+           var input = red(color)
+
+           this.weight[i] = this.weight[i] - this.sigD((pred-true_)*(pred-true_))* 2 * (pred-true_)* input * this.alfa
            i++
        }
      }
 
    }
 
+   weights(){
+     return this.weight ;
+   }
 
 
 

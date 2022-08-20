@@ -1,19 +1,22 @@
 
 var weightVisualizers = []
-let inIm ;
+let inIm
 var trainImg = []
-var neu ;
-var  a = 0;
+var neurons = []
+var nImag = 100
+
 function setup() {
 
   createCanvas(1000, 870);
-  for( a = 0 ;  a < 10 ; a++ ){
-    for(i = 0 ; i < 1000 ; i++) {
-      var imgA = []
-      var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain/mnist_png/train/'+String(a)+'/'+String(i)+'_.png');
-      imgA.push(img)
+
+  // import data
+  for(var a = 0 ; a < 10 ; a++ ){
+   var number = [] ;
+   for(var i = 0 ; i < nImag ; i++) {
+         var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain/mnist_png/train/'+String(a)+'/'+String(i)+'_.png');
+         number.push(img)
    }
-     trainImg.push(imgA)
+   trainImg.push(number)
   }
 
   // weight visualizers
@@ -29,25 +32,70 @@ function setup() {
     fill(0)
     ellipse(pos.x-20 ,pos.y+40,20,20)
   }
+
   // input image
   let large = 300 ;
   inIm = new Visualizer(large,createVector(20,height/2 -large/2 ))
-  weightVisualizers.push(v)
 
-  neu = new Neuron(28*28)
-
+  // iniciali neurons
+  for(var i = 0 ; i < 10 ;i++){
+    var neu = new Neuron(28*28)
+    neurons.push(neu)
+  }
 }
+
+var i = 0 ;
+var j = 0 ;
 
 function draw() {
 
-  for(var i = 0 ; i < 10 ; i++){
-    weightVisualizers[i].ver(trainImg[i])
-  }
-  inIm.ver(trainImg[a])
+  background(255)
+  var img = trainImg[i][j]
+  console.log("I :",i,"J :",j)
+  inIm.ver(img)
 
-  pred = neu.predic(trainImg[a])
-  neu.updateWeight(trainImg[a],pred,1)
-  console.log( "Prediccion : "+ pred )
-  a++
+  textSize(32);
+  text(" Data Point :", 20,300/2  );
+  textSize(15);
+  text("    Etiqueta : " +String(i), 20,300/2-50 );
+  var error = 0
+  var predicciones = [] ;
+  for(var p = 0 ; p < 10 ; p++){
+
+    var pre = neurons[p].predic(img)
+    predicciones.push(pre)
+    if(p == i){
+     neurons[p].updateWeight(img,pre,1)
+     errorN = pow((1-pre),2)
+    }else{
+     neurons[p].updateWeight(img,pre,0)
+     errorN = pow((0-pre),2)
+    }
+    error+=errorN
+  }
+
+
+
+  console.log("Predicciones :",predicciones)
+
+  for(var p = 0 ; p < 10 ; p++){
+    var pesos = neurons[p].weights()
+    weightVisualizers[p].verWeight(pesos)
+  }
+
+
+  i++
+  if(i >=10){
+    i = 0 ;
+    j++ ;
+  }
+
+  if( j >= nImag ) {
+    j = 0 ;
+  }
+
+
+
+  frameRate()
 
 }
