@@ -3,7 +3,7 @@ var weightVisualizers = []
 let inIm
 var trainImg = []
 var neurons = []
-var nImag = 20
+var nImag = 100
 let h = 10 ;
 let largeW = 80 ;
 let padding = 5 ;
