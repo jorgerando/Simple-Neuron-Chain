@@ -10,7 +10,7 @@ class Neuron {
         for(var i = 0 ; i < nW ; i++ ){
           this.weight[i] = 0
         }
-        this.alfa = 1
+        this.alfa = 0.5
    }
 
    sig(x){
@@ -19,6 +19,13 @@ class Neuron {
 
    sigD(x){
     return this.sig(x)*(1-this.sig(x))
+   }
+
+   relu(x){
+     return (x > 0 )*x
+   }
+   reluD(x){
+     return (x > 0)
    }
 
    predic(img){
