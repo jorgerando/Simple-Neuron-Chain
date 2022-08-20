@@ -1,4 +1,4 @@
-# Simple-Neuron-Chain
+# Simple-Neuron-Chain :books:
 
 This program visualizes how a chain of simple neurons learns to distinguish digits. Each sub-image of the chain represents the model that each neuron has of the digit that it has to distinguish (Neurons are made from scratch, with the aim of learning how neural networks work)
 
