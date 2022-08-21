@@ -17,7 +17,7 @@ function setup() {
   for(var a = 0 ; a < 10 ; a++ ){
    var number = [] ;
    for(var i = 0 ; i < nImag ; i++) {
-         var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain/mnist_png/train/'+String(a)+'/'+String(i)+'_.png');
+         var img = loadImage('https://jorgerando.github.io/Simple-Neuron-Chain-From-Scratch/mnist_png/train/'+String(a)+'/'+String(i)+'_.png');
          number.push(img)
    }
    trainImg.push(number)
